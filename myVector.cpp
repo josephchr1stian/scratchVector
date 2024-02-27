@@ -41,6 +41,12 @@ T* myVector<T>::begin() const
 }
 
 template <typename T>
+T* myVector<T>::end() const
+{
+    return sizeOfArray > 0 ? &array[sizeOfArray-1] : nullptr;
+}
+
+template <typename T>
 T& myVector<T>::front() const
 {
     if (sizeOfArray == 0)
@@ -54,6 +60,14 @@ T& myVector<T>::back() const
     if (sizeOfArray == 0)
         std::cout << "empty array";
     return array[sizeOfArray-1];
+}
+
+template<typename T>
+T& myVector<T>::at(unsigned int index) const
+{
+    if (index > sizeOfArray)
+        return array[sizeOfArray-1]; // return last element
+    return array[index];
 }
 
 template<typename T>
@@ -74,6 +88,14 @@ void myVector<T>::resize()
     array = arrayCopy;
 }
 
+template <typename T>
+bool myVector<T>::empty() const
+{
+    if (sizeOfArray== 0)
+        return true;
+    else
+        return false;
+}
 
 template <typename T>
 unsigned int myVector<T>:: size() const

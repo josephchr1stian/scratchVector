@@ -14,8 +14,8 @@ public:
     T& front() const;
     T& back()const;
     T& at(unsigned int index) const;
-    T* end();
-    bool empty();
+    T* end() const;
+    bool empty() const;
     void push_back();
     void pop_back();
     void resize();

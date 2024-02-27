@@ -1,0 +1,7 @@
+# ninja log v5
+0	743	1709071325479541191	CMakeFiles/cs8_vector_scratch.dir/main.cpp.o	5bbb3d879ced7457
+5	300	1709071328976754618	CMakeFiles/cs8_vector_scratch.dir/main.cpp.o	5bbb3d879ced7457
+5	372	1709071345686205377	CMakeFiles/cs8_vector_scratch.dir/main.cpp.o	5bbb3d879ced7457
+4	310	1709071498391015625	CMakeFiles/cs8_vector_scratch.dir/myVector.cpp.o	9ecaf98b9342250
+4	786	1709071498865604903	CMakeFiles/cs8_vector_scratch.dir/main.cpp.o	5bbb3d879ced7457
+786	1010	1709071499086956502	cs8_vector_scratch	66b3133f7c6abaf7
