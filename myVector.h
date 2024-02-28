@@ -20,7 +20,7 @@ public:
     inline T& front() const noexcept(false);
     inline T& back()const noexcept(false);
     inline T& at(unsigned int index) const noexcept(false);
-    const T& operator[](unsigned int) const;
+    inline T& operator[](unsigned int) const;
     inline VecIterator<T> end() const noexcept(false);
 
     inline bool empty() const;
@@ -28,10 +28,8 @@ public:
     void pop_back() noexcept(false);
     void resize();
 
-
     template <typename U> 
     friend std::ostream& operator<<(const std::ostream& os, const myVector<U>& v);
-    
 
     myVector();
     myVector(unsigned int size);
@@ -59,11 +57,9 @@ myVector<T>::myVector()
 template <typename T>
 myVector<T>::myVector(unsigned int size)
 {
-
      array = new T[size];
      capacity = size;
      sizeOfArray = size;
-
 }
 
 template <typename T>
@@ -115,7 +111,7 @@ inline T& myVector<T>::at(unsigned int index) const noexcept(false) {
 }
 
 template <typename T> 
-const T& myVector<T>::operator[](unsigned int index) const {
+inline T& myVector<T>::operator[](unsigned int index) const {
     /* don't throw errors */
     return array[index];
 }

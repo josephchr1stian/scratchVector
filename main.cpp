@@ -5,7 +5,9 @@
 static void itest();
 static void vtest();
 
-int main() {
+int testeverything() __asm("main");
+
+int testeverything() {
     myVector<int> x, y;
     myVector<char> a, b;
     myVector<int> z(10, 9);
