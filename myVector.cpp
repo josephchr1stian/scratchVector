@@ -2,20 +2,24 @@
 // Created by Joseph Garcia on 2/27/24.
 //
 
+#ifndef CS8_VECTOR_SCRATCH_MYVECTOR_CPP
+#define CS8_VECTOR_SCRATCH_MYVECTOR_CPP
+
 #include "myVector.h"
 
 template <typename T>
 myVector<T>::myVector()
 {
+    array = new T[0];
     capacity = 0;
     sizeOfArray = 0;
-    array = 0;
+
 }
 template <typename T>
 myVector<T>::myVector(unsigned int size)
 {
 
-     array = new T[size];
+    array = new T[size];
      capacity = size;
      sizeOfArray = size;
 
@@ -73,19 +77,26 @@ T& myVector<T>::at(unsigned int index) const
 template<typename T>
 void myVector<T>::resize()
 {
-    if (sizeOfArray == 0)
+    if (sizeOfArray == 0 || capacity == 0)
     {
         sizeOfArray =1;
         capacity = 1;
     }
-    capacity *= 2;
-    T *arrayCopy = new T[sizeOfArray];
-    for( int i = 0; i < sizeOfArray; i++)
+    else
     {
-        arrayCopy[i] = array[i]; // New array contains old array
+        capacity *= 2;
+        sizeOfArray += 1;
+        T *arrayCopy = new T[sizeOfArray];
+        for( int i = 0; i < sizeOfArray; i++)
+        {
+            arrayCopy[i] = array[i]; // New array contains old array
+        }
+        delete array;
+        array = arrayCopy;
+
     }
-    delete array;
-    array = arrayCopy;
+    //sizeOfArray +=1;
+
 }
 
 template<typename T>
@@ -116,13 +127,13 @@ void myVector<T>::push_back(const T& data)
 {
     if (sizeOfArray < capacity)
     {
-        array[sizeOfArray+1] = data;
+        array[sizeOfArray-1] = data;
         sizeOfArray += 1;
     }
     else
     {
         resize();
-        array[sizeOfArray+1] = data;
+        array[sizeOfArray-1] = data;
     }
 }
 
@@ -263,6 +274,12 @@ myVector<T>& myVector<T>::operator=(const myVector<T> & data)
 template <typename T>
 std::ostream&  operator<<(std::ostream& out, const myVector<T>& vector)
 {
-    for(int i =0; i <vector.sizeOfArray; i++)
-        std::cout<< vector.array(i);
+    for(int i =0; i < vector.sizeOfArray ; i++)
+    {
+        std::cout<< vector.at(i);
+    }
+
 }
+
+
+#endif

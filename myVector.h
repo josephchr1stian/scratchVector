@@ -6,6 +6,7 @@
 #define CS8_VECTOR_SCRATCH_MYVECTOR_H
 #include <iostream>
 #include <algorithm>
+
 template <typename T>
 class myVector {
 
@@ -31,7 +32,9 @@ public:
     myVector<T>& operator-(const myVector<T> & vector);
     myVector<T>& operator=(const myVector<T>& data);
     bool operator==(const myVector<T>& vector);
-    friend std::ostream& operator<<(std::ostream& out, const myVector<T>& vector);
+
+    template<typename S>
+    friend std::ostream& operator<<(std::ostream& out, const myVector<S>&);
     ~myVector(); //Destructor
     //myVector<T>& operator+(const T& data);
     //template<typename S> /// ?
@@ -44,9 +47,10 @@ private:
     unsigned int capacity, sizeOfArray;
     void resize();
     void resizeDown();
-    T  array[];
+    T*  array;
 
 };
 
+#include "myVector.cpp"
 
 #endif //CS8_VECTOR_SCRATCH_MYVECTOR_H
