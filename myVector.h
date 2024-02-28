@@ -27,6 +27,7 @@ public:
     void push_back(T);
     void pop_back() noexcept(false);
     void resize();
+    void swap(myVector<T>&);
 
     template <typename U> 
     friend std::ostream& operator<<(const std::ostream& os, const myVector<U>& v);
@@ -175,6 +176,18 @@ void myVector<T>::resize()
         array[i] = _array[i];
 
     return;
+}
+
+template<typename T>
+void myVector<T>::swap(myVector<T>& other) {
+    if (other.sizeOfArray != this->sizeOfArray) 
+        return;
+
+    for (int i = 0; i < sizeOfArray; ++i) {
+        array[i] = array[i] ^ other.array[i];
+        other.array[i] = array[i] ^ other.array[i];
+        array[i] = array[i] ^ other.array[i];
+    }
 }
 
 

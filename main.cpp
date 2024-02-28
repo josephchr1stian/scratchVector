@@ -4,7 +4,7 @@
 #include "myVector.h"
 
 static void itest();
-static void vtest();
+static void stest();
 static void anothertest();
 
 bool globl = false; 
@@ -25,7 +25,11 @@ int testeverything() {
     myVector<int> x, y;
     myVector<char> a, b;
     myVector<int> z(10, 9);
+    myVector<int> k(2);
 
+    k.push_back(1);
+
+    std::cout << k << '\n';
     std::cout << z << '\n';
 
     x.push_back(5);
@@ -48,20 +52,19 @@ int testeverything() {
     std::cout << a << '\n';
 
     itest();
+    stest();
 
     std::cout << "All tests done. Crashing with exception\n";
     /* crash the program with an exception */ 
     b.front();
-
-    std::cout << "persisted\n";
 
     return 0;
 }
 
 static void itest() {
     std::cout << "Testing iterator\n";
-
     myVector<int> a; 
+
     for (int i = 0; i < 50; ++i)
         a.push_back(i);
 
@@ -83,14 +86,36 @@ static void itest() {
     return;
 }
 
+static void stest() {
+    std::cout << "Testing swap\n";
+
+    myVector<int> a; 
+    myVector<int> b; 
+
+    for (int i =0 ; i < 21; i++)
+        a.push_back(i);
+
+    std::cout << "A: " << a << '\n';
+
+    for (int i =21; i > 0; i--)
+        b.push_back(i);
+
+    std::cout << "B: " << b << '\n';
+
+    a.swap(b);
+
+    std::cout << "A: " << a << '\n';
+    std::cout << "B: " << b << '\n';
+
+}
+
 static void anothertest() {
     myVector<int> oob; 
     oob.push_back(50); 
 
     try {
         oob.at(50);
-    }
-    catch (std::exception& e) {
+    } catch (std::exception& e) {
         std::cout << "Caught another exception: \n";
         std::cout << e.what() << '\n';
     }
