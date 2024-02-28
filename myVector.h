@@ -68,9 +68,12 @@ myVector<T>::myVector(unsigned int size)
 template <typename T>
 myVector<T>::myVector(unsigned int size, T data)
 {
-    array = new T[size](data);
+    array = new T[size];
     sizeOfArray = size;
     capacity = size;
+
+    for (int i = 0; i < sizeOfArray; ++i)
+        array[i] = data;
 }
 
 template <typename T>

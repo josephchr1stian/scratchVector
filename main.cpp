@@ -8,6 +8,10 @@ static void vtest();
 int main() {
     myVector<int> x, y;
     myVector<char> a, b;
+    myVector<int> z(10, 9);
+
+    std::cout << z << '\n';
+
 
     x.push_back(5);
     x.push_back(7);
@@ -50,6 +54,9 @@ static void itest() {
     for (VecIterator it = a.begin(); it != a.end(); ++it) {
         std::cout << *it << '\n';
     }
+
+    for (int i = 0; i < 25; ++i) 
+        a.pop_back();
 
     for ( const auto& it : a) {
         std::cout << it << '\n';
