@@ -24,7 +24,7 @@ public:
 
     inline bool empty() const;
     void push_back(T);
-    void pop_back();
+    void pop_back() noexcept(false);
     void resize();
 
     myVector();
@@ -67,16 +67,12 @@ myVector<T>::myVector(unsigned int size)
 template <typename T>
 myVector<T>::myVector(unsigned int size, T data)
 {
-    array = new T[size];
+    array = new T[size](data);
     sizeOfArray = size;
     capacity = size;
 
-    for (int i = 0; i < size; i++)
-    {
-        array[i] = data;
-    }
-
-
+    //for (int i = 0; i < size; i++)
+    //    array[i] = data;
 }
 
 template <typename T>
@@ -128,14 +124,16 @@ void myVector<T>::push_back(T element) {
     if (capacity == sizeOfArray)  
         this->resize(); 
     
-    array[sizeOfArray-1] = element;
     sizeOfArray++;
+    array[sizeOfArray-1] = element;
 
     return;
 }
 
 template<typename T>
 void myVector<T>::pop_back() {
+    if (capacity == 0) 
+        throw VecEmpty();
     /* do not waste time writing to memory */
     /* just mark it as deallocated */
     sizeOfArray--;
@@ -146,16 +144,22 @@ void myVector<T>::pop_back() {
 template<typename T>
 void myVector<T>::resize()
 {
-    if (sizeOfArray == 0)
-        sizeOfArray = capacity = 1; 
+    /* it is not our place to change the size 
+     * of the array, since we aren't adding 
+     * elements to it 
+     */
+    if (capacity == 0)
+        capacity = 1;
 
     capacity *= 2;
     T *arrayCopy = new T[capacity];
 
-    for( int i = 0; i < sizeOfArray-1; i++)
-        arrayCopy[i] = array[i]; 
+    std::cout << sizeOfArray << '\n';
+    if (sizeOfArray != 0) 
+        for( int i = 0; i < sizeOfArray-1; i++)
+            arrayCopy[i] = array[i]; 
 
-    delete array;
+    delete[] array;
     array = arrayCopy;
 }
 

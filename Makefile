@@ -9,7 +9,7 @@ OBJECTS:=$(SOURCES:.cpp=.o)
 TARGET=vector
 
 DEPS=.deps
--include $(DEPS)/$*.d
+-include $(DEPS)/$(OBJECTS:.o=.d)
 
 $(TARGET): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $^ -o $@
