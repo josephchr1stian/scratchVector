@@ -3,9 +3,9 @@
 //
 #ifndef CS8_VECTOR_SCRATCH_MYVECTOR_H
 #define CS8_VECTOR_SCRATCH_MYVECTOR_H
-#include <iostream>
 
 #include "vex.h"
+#include "vit.h"
 
 template <typename T>
 class myVector {
@@ -16,12 +16,12 @@ public:
      * compile doesn't inline if not defined in class 
      * declaration 
      */
-    inline T* begin() const noexcept(false);
+    inline VecIterator<T> begin() const noexcept(false);
     inline T& front() const noexcept(false);
     inline T& back()const noexcept(false);
     inline T& at(unsigned int index) const noexcept(false);
     const T& operator[](unsigned int) const;
-    inline T* end() const noexcept(false);
+    inline VecIterator<T> end() const noexcept(false);
 
     inline bool empty() const;
     void push_back(T);
@@ -51,6 +51,7 @@ myVector<T>::myVector()
 {
     capacity = 0;
     sizeOfArray = 0;
+    array = nullptr;
 
     return; 
 }
@@ -70,18 +71,15 @@ myVector<T>::myVector(unsigned int size, T data)
     array = new T[size](data);
     sizeOfArray = size;
     capacity = size;
-
-    //for (int i = 0; i < size; i++)
-    //    array[i] = data;
 }
 
 template <typename T>
-inline T* myVector<T>::begin() const noexcept(false)
+inline VecIterator<T> myVector<T>::begin() const noexcept(false)
 {
     if (!capacity) 
         throw VecEmpty(); 
     /* base of the array is the zeroth element */ 
-    return &array;
+    return VecIterator<T>(&array[0]);
 }
 
 template <typename T>
@@ -120,10 +118,11 @@ const T& myVector<T>::operator[](unsigned int index) const {
 
 
 template <typename T>
-inline T* myVector<T>::end() const noexcept(false) {
+inline VecIterator<T> myVector<T>::end() const noexcept(false) {
     if (!capacity) 
         throw VecEmpty();
-    return &array[size-1];
+    /* read past the last element */ 
+    return VecIterator<T>(&array[sizeOfArray]);
 }
 
 template <typename T> 
@@ -133,11 +132,15 @@ bool myVector<T>::empty() const {
 
 template<typename T>
 void myVector<T>::push_back(T element) {
-    if (capacity == sizeOfArray)  
+    if (sizeOfArray + 1 > capacity)  
         this->resize(); 
     
-    sizeOfArray++;
-    array[sizeOfArray-1] = element;
+    array[sizeOfArray] = element;
+    ++sizeOfArray;
+    std::cout << "ARR: " << ' ';
+    for (int i = 0; i < sizeOfArray; i++) 
+        std::cout <<  this->array[i] << ' ' << element << ' '<< ' ';
+    std::cout << '\n';
 
     return;
 }
@@ -156,22 +159,21 @@ void myVector<T>::pop_back() {
 template<typename T>
 void myVector<T>::resize()
 {
-    /* it is not our place to change the size 
-     * of the array, since we aren't adding 
-     * elements to it 
-     */
-    if (capacity == 0)
-        capacity = 1;
+    T _array[sizeOfArray];
+    for (int i = 0; i < sizeOfArray; ++i)
+        _array[i] = array[i];
 
-    capacity *= 2;
-    T *arrayCopy = new T[capacity];
+    if (array != nullptr) 
+        delete[] array;
 
-    if (sizeOfArray != 0) 
-        for( int i = 0; i < sizeOfArray-1; i++)
-            arrayCopy[i] = array[i]; 
+    capacity = (capacity == 0 ? 1 : capacity * 2); 
 
-    delete[] array;
-    array = arrayCopy;
+    array = new T[capacity];
+
+    for (int i = 0; i < sizeOfArray; ++i) 
+        array[i] = _array[i];
+
+    return;
 }
 
 

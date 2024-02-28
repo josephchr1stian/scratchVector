@@ -1,8 +1,8 @@
 CXX=c++ 
 SOURCES=main.cpp 
 
-CXXFLAGS=-fsanitize=address -g
-LDFLAGS=-fsanitize=address -g
+CXXFLAGS= -g -fsanitize=address
+LDFLAGS=-g -fsanitize=address
 DEPFLAGS=-MMD -MP
 
 OBJECTS:=$(SOURCES:.cpp=.o)
@@ -23,6 +23,6 @@ run: $(TARGET)
 	./$(TARGET)
 
 clean: 
-	$(RM) $(OBJECTS) $(TARGET)
+	$(RM) -r $(OBJECTS) $(TARGET) $(DEPS)
 
-
+.DEFAULT_GOAL=$(TARGET)
