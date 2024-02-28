@@ -14,7 +14,7 @@ public:
     /* small methods should be made inline */ 
     /* 
      * compile doesn't inline if not defined in class 
-     * declaration 
+     * declaration ... I think
      */
     inline VecIterator<T> begin() const noexcept(false);
     inline T& front() const noexcept(false);
@@ -39,7 +39,7 @@ public:
 
 private:
     unsigned int capacity, sizeOfArray;
-    /* use pointers for heap */
+    /* use pointers for heap mem */
     T*  array;
 };
 
@@ -59,7 +59,9 @@ myVector<T>::myVector(unsigned int size)
 {
      array = new T[size];
      capacity = size;
-     sizeOfArray = size;
+     sizeOfArray = 0;
+
+     return; 
 }
 
 template <typename T>
@@ -71,6 +73,8 @@ myVector<T>::myVector(unsigned int size, T data)
 
     for (int i = 0; i < sizeOfArray; ++i)
         array[i] = data;
+
+    return; 
 }
 
 template <typename T>
@@ -127,6 +131,7 @@ inline VecIterator<T> myVector<T>::end() const noexcept(false) {
 
 template <typename T> 
 bool myVector<T>::empty() const {
+    /* !size implies !cap */
     return !sizeOfArray ? true : false; 
 }
 
@@ -162,7 +167,7 @@ void myVector<T>::resize()
     if (array != nullptr) 
         delete[] array;
 
-    capacity = (capacity == 0 ? 1 : capacity * 2); 
+    capacity = (!capacity ? 1 : capacity * 2); 
 
     array = new T[capacity];
 
