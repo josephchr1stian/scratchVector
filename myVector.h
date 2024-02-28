@@ -20,6 +20,7 @@ public:
     inline T& front() const noexcept(false);
     inline T& back()const noexcept(false);
     inline T& at(unsigned int index) const noexcept(false);
+    const T& operator[](unsigned int) const noexcept(false);
     inline T* end() const noexcept(false);
 
     inline bool empty() const;
@@ -27,21 +28,20 @@ public:
     void pop_back() noexcept(false);
     void resize();
 
+
+    template <typename U> 
+    friend std::ostream& operator<<(const std::ostream& os, const myVector<U>& v);
+    
+
     myVector();
     myVector(unsigned int size);
     myVector(unsigned int size, T data);
-    myVector<T>& operator+(const T& data);
-    myVector<T>& operator-(const T& data);
-    //myVector<T>& operator+(const T& data);
-    //template<typename S> /// ?
-    //LinkedList<T>& operator=(const myVector<T>& vector)
-    //LinkedList<T>& operator=(const myVector<T>& vector); /// ?
-    //LinkedList(const LinkedList<T>& list);
+    /* don't know how subtracting vectors /should/ work */
     ~myVector(); //Destructor
 
 private:
     unsigned int capacity, sizeOfArray;
-    /* use pointers for heap arrays */
+    /* use pointers for heap */
     T*  array;
 };
 
@@ -106,6 +106,14 @@ inline T& myVector<T>::at(unsigned int index) const noexcept(false) {
         throw VecEmpty();
     return array[index];
 }
+
+template <typename T> 
+const T& myVector<T>::operator[](unsigned int index) const noexcept(false) {
+    if (index > sizeOfArray || index < 0) 
+        throw VecEmpty();
+    return array[index];
+}
+
 
 template <typename T>
 inline T* myVector<T>::end() const noexcept(false) {
@@ -176,6 +184,14 @@ myVector<T>::~myVector() {
     delete[] array;
 
     return;
+}
+
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const myVector<T>& v) {
+    for (int i = 0; i < v.size(); ++i) 
+        os << v[i] << ' ';
+    return os;
 }
 
 #endif //CS8_VECTOR_SCRATCH_MYVECTOR_H
