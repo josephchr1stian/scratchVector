@@ -137,10 +137,6 @@ void myVector<T>::push_back(T element) {
     
     array[sizeOfArray] = element;
     ++sizeOfArray;
-    std::cout << "ARR: " << ' ';
-    for (int i = 0; i < sizeOfArray; i++) 
-        std::cout <<  this->array[i] << ' ' << element << ' '<< ' ';
-    std::cout << '\n';
 
     return;
 }
