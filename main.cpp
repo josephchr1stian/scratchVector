@@ -12,7 +12,6 @@ int main() {
 
     std::cout << z << '\n';
 
-
     x.push_back(5);
     x.push_back(7);
     y.push_back(6);
@@ -34,6 +33,7 @@ int main() {
 
 
     itest();
+
     std::cout << "All tests done. Crashing with exception\n";
     /* crash the program with an exception */ 
     b.front();

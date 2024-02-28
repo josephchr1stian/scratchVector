@@ -65,6 +65,7 @@ myVector<T>::myVector(unsigned int size)
      sizeOfArray = size;
 
 }
+
 template <typename T>
 myVector<T>::myVector(unsigned int size, T data)
 {

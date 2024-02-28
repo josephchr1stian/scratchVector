@@ -1,4 +1,13 @@
-/* vector iterator class is memory unsafe and will read OOB */
+/* vector iterator class is memory unsafe 
+ * and will read OOB if told to do so
+ */
+
+/*          __             __ 
+ *    ___  / /  ___ ____  / /_
+ *   / _ \/ _ \/ _ `/ _ \/ __/
+ *  / .__/_//_/\_,_/_//_/\__/ 
+ * /_/                        
+ */
 template <typename T> class VecIterator {
     private: 
         T* current; 
@@ -18,33 +27,28 @@ template <typename T> class VecIterator {
         bool operator!=(const VecIterator& right) const;
 };
 
-template <typename T>
-T VecIterator<T>::operator*() {
+template <typename T> T VecIterator<T>::operator*() {
     return *current;
 };
 
-template <typename T>
-VecIterator<T> VecIterator<T>::operator++() {
+template <typename T> VecIterator<T> VecIterator<T>::operator++() {
     /* whoopee! */
     //current = (T*)((char*)current + sizeof(T));
     current++;
     return *this; 
 };
 
-template <typename T>
-VecIterator<T> VecIterator<T>::operator--() {
+template <typename T> VecIterator<T> VecIterator<T>::operator--() {
     //current = (T*)((char*)current - sizeof(T));
     current++;
     return *this;
 };
 
-template <typename T>
-bool VecIterator<T>::operator==(const VecIterator<T>& right) const {
+template <typename T> bool VecIterator<T>::operator==(const VecIterator<T>& right) const {
     return current == right.current;
 };
 
-template <typename T>
-bool VecIterator<T>::operator!=(const VecIterator<T>& right) const {
+template <typename T> bool VecIterator<T>::operator!=(const VecIterator<T>& right) const {
     return current != right.current; 
 };
 
