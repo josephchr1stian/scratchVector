@@ -20,7 +20,7 @@ public:
     inline T& front() const noexcept(false);
     inline T& back()const noexcept(false);
     inline T& at(unsigned int index) const noexcept(false);
-    const T& operator[](unsigned int) const noexcept(false);
+    const T& operator[](unsigned int) const;
     inline T* end() const noexcept(false);
 
     inline bool empty() const;
@@ -102,15 +102,19 @@ inline T& myVector<T>::back() const noexcept(false)
 
 template <typename T>
 inline T& myVector<T>::at(unsigned int index) const noexcept(false) {
-    if (index > sizeOfArray || index < 0) 
+    if (index < 0) 
         throw VecEmpty();
+    /* do not allow users to read into garbage 
+     * capacity
+     */
+    else if (index > sizeOfArray-1)
+        throw VecOOB();
     return array[index];
 }
 
 template <typename T> 
-const T& myVector<T>::operator[](unsigned int index) const noexcept(false) {
-    if (index > sizeOfArray || index < 0) 
-        throw VecEmpty();
+const T& myVector<T>::operator[](unsigned int index) const {
+    /* don't throw errors */
     return array[index];
 }
 
@@ -162,7 +166,6 @@ void myVector<T>::resize()
     capacity *= 2;
     T *arrayCopy = new T[capacity];
 
-    std::cout << sizeOfArray << '\n';
     if (sizeOfArray != 0) 
         for( int i = 0; i < sizeOfArray-1; i++)
             arrayCopy[i] = array[i]; 
