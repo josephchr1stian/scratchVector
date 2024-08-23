@@ -1,1 +1,1 @@
-hiiiiiiiiiiiii :3
+This is a vector I made from scratch in C++ as part of my coursework.
